@@ -8,6 +8,7 @@ import java.util.Objects;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,6 +18,7 @@ import com.ubiqube.etsi.mano.model.vnf.PackageOperationalStateType;
 import com.ubiqube.etsi.mano.model.vnf.PackageUsageStateType;
 
 import io.swagger.annotations.ApiModelProperty;
+import nonapi.io.github.classgraph.json.Id;
 
 /**
  * VnfPkgInfo
@@ -24,7 +26,14 @@ import io.swagger.annotations.ApiModelProperty;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-11-25T10:00:04.549+01:00")
 
+@Document
 public class VnfPkgInfo {
+
+	@ApiModelProperty(required = true, value = "An identifier with the intention of being globally unique. ")
+	/**
+	 * An identifier with the intention of being globally unique.
+	 **/
+	@Id
 	@JsonProperty("id")
 	private String id = null;
 
@@ -384,6 +393,11 @@ public class VnfPkgInfo {
 
 	public VnfPkgInfo links(final VnfPkgInfoLinks links) {
 		this.links = links;
+		return this;
+	}
+
+	public VnfPkgInfo userDefinedData(final Map<String, Object> userDefinedData) {
+		this.userDefinedData = userDefinedData;
 		return this;
 	}
 
