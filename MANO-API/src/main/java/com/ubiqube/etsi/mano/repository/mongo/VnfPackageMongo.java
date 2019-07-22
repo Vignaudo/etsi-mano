@@ -1,11 +1,14 @@
 package com.ubiqube.etsi.mano.repository.mongo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import com.ubiqube.etsi.mano.grammar.Node;
 import com.ubiqube.etsi.mano.model.vnf.sol005.VnfPkgInfo;
 import com.ubiqube.etsi.mano.repository.VnfPackageRepository;
 
@@ -13,6 +16,7 @@ import com.ubiqube.etsi.mano.repository.VnfPackageRepository;
 public class VnfPackageMongo implements VnfPackageRepository {
 	@Autowired
 	private final MongoTemplate mongoTemplate;
+	private final MongoQueryer queryier = new MongoQueryer();
 
 	@Autowired
 	public VnfPackageMongo(final MongoTemplate _mongoTemplate) {
@@ -38,4 +42,8 @@ public class VnfPackageMongo implements VnfPackageRepository {
 		return mongoTemplate.save(entity);
 	}
 
+	public List<VnfPkgInfo> query(final List<Node> nodes) {
+		final Query query = queryier.getCriteria(nodes);
+		return mongoTemplate.find(query, VnfPkgInfo.class);
+	}
 }
