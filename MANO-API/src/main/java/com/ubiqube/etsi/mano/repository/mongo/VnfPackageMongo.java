@@ -1,5 +1,6 @@
 package com.ubiqube.etsi.mano.repository.mongo;
 
+import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,17 @@ public class VnfPackageMongo implements VnfPackageRepository {
 	public List<VnfPkgInfo> query(final List<Node> nodes) {
 		final Query query = queryier.getCriteria(nodes);
 		return mongoTemplate.find(query, VnfPkgInfo.class);
+	}
+
+	@Override
+	public void storeObject(final String _vnfPkgId, final InputStream _stream, final String _filename) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void storeObject(final String _vnfPkgId, final Object _object, final String _filename) {
+		// TODO Auto-generated method stub
+
 	}
 }
