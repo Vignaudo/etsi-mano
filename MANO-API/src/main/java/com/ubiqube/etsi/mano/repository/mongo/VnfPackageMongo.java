@@ -59,4 +59,10 @@ public class VnfPackageMongo implements VnfPackageRepository {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public List<VnfPkgInfo> query(final String filter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
