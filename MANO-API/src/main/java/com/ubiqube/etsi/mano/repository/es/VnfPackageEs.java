@@ -44,4 +44,22 @@ public class VnfPackageEs implements VnfPackageRepository {
 		return null;
 	}
 
+	@Override
+	public void storeBinary(final String _id, final InputStream _stream, final String _filename) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public byte[] getBinary(final String _id, final String _filename) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public byte[] getBinary(final String _id, final String _filename, final int min, final Integer max) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
