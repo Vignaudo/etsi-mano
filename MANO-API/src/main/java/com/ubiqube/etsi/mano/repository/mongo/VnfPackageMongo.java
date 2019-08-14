@@ -49,7 +49,7 @@ public class VnfPackageMongo implements VnfPackageRepository {
 	}
 
 	@Override
-	public void storeObject(final String _vnfPkgId, final InputStream _stream, final String _filename) {
+	public void storeBinary(final String _vnfPkgId, final InputStream _stream, final String _filename) {
 		// TODO Auto-generated method stub
 
 	}
