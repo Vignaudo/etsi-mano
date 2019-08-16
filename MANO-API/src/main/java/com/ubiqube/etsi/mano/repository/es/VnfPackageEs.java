@@ -24,11 +24,6 @@ public class VnfPackageEs implements VnfPackageRepository {
 	public VnfPkgInfo save(final VnfPkgInfo entity) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void storeObject(final String _vnfPkgId, final InputStream _stream, final String _filename) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -60,6 +55,18 @@ public class VnfPackageEs implements VnfPackageRepository {
 	public byte[] getBinary(final String _id, final String _filename, final int min, final Integer max) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void storeBinary(final String id, final String content, final String filename) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void storeBinary(final String _id, final byte[] content, final String filename) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

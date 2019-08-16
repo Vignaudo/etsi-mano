@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -13,6 +14,7 @@ import com.ubiqube.etsi.mano.grammar.Node;
 import com.ubiqube.etsi.mano.model.vnf.sol005.VnfPkgInfo;
 import com.ubiqube.etsi.mano.repository.VnfPackageRepository;
 
+@Profile("mongo-db")
 @Service
 public class VnfPackageMongo implements VnfPackageRepository {
 	@Autowired
@@ -76,5 +78,17 @@ public class VnfPackageMongo implements VnfPackageRepository {
 	public byte[] getBinary(final String _id, final String _filename, final int min, final Integer max) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void storeBinary(final String id, final String content, final String filename) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void storeBinary(final String _id, final byte[] content, final String filename) {
+		// TODO Auto-generated method stub
+
 	}
 }
