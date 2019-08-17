@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import com.ubiqube.etsi.mano.grammar.Node;
 import com.ubiqube.etsi.mano.model.vnf.sol005.VnfPkgInfo;
 import com.ubiqube.etsi.mano.repository.VnfPackageRepository;
 
@@ -45,11 +44,6 @@ public class VnfPackageMongo implements VnfPackageRepository {
 		return mongoTemplate.save(entity);
 	}
 
-	public List<VnfPkgInfo> query(final List<Node> nodes) {
-		final Query query = queryier.getCriteria(nodes);
-		return mongoTemplate.find(query, VnfPkgInfo.class);
-	}
-
 	@Override
 	public void storeBinary(final String _vnfPkgId, final InputStream _stream, final String _filename) {
 		// TODO Auto-generated method stub
@@ -64,8 +58,8 @@ public class VnfPackageMongo implements VnfPackageRepository {
 
 	@Override
 	public List<VnfPkgInfo> query(final String filter) {
-		// TODO Auto-generated method stub
-		return null;
+		final Query query = queryier.getCriteria(filter);
+		return mongoTemplate.find(query, VnfPkgInfo.class);
 	}
 
 	@Override

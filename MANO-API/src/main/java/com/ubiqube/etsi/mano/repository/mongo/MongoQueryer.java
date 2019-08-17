@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import com.ubiqube.etsi.mano.exception.GenericException;
+import com.ubiqube.etsi.mano.grammar.AstBuilder;
 import com.ubiqube.etsi.mano.grammar.Node;
 import com.ubiqube.etsi.mano.grammar.Node.Operand;
 
@@ -16,9 +17,16 @@ public class MongoQueryer {
 		final Query query = new Query();
 		final Criteria base = new Criteria();
 		final List<Criteria> criterias = convertNodeList(nodes);
-		base.orOperator(criterias.toArray(new Criteria[criterias.size()]));
+		if (!criterias.isEmpty()) {
+			base.andOperator(criterias.toArray(new Criteria[criterias.size()]));
+		}
 		query.addCriteria(base);
 		return query;
+	}
+
+	public Query getCriteria(final String filter) {
+		final AstBuilder astBuilder = new AstBuilder(filter);
+		return getCriteria(astBuilder.getNodes());
 	}
 
 	private List<Criteria> convertNodeList(final List<Node> nodes) {
@@ -53,4 +61,5 @@ public class MongoQueryer {
 			throw new GenericException("Unknown query Op: " + op);
 		}
 	}
+
 }
