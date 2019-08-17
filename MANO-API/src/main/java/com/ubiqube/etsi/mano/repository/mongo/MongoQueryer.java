@@ -2,6 +2,7 @@ package com.ubiqube.etsi.mano.repository.mongo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -36,7 +37,6 @@ public class MongoQueryer {
 			crit = applyOp(crit, node.getOp(), node.getValue());
 			criterias.add(crit);
 		}
-
 		return criterias;
 	}
 
@@ -67,7 +67,7 @@ public class MongoQueryer {
 
 	private String escapeRegexp(final String value) {
 		// /[-\/\\^$*+?.()|[\]{}]/g, '\\$&'
-		return value;
+		return Pattern.quote(value);
 	}
 
 }
