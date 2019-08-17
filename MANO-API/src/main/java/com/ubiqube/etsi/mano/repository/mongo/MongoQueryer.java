@@ -55,11 +55,19 @@ public class MongoQueryer {
 		case LTE:
 			return crit.lte(value);
 		case CONT:
-			return crit.ne(value);
+			return crit.regex(".*" + escapeRegexp(value) + ".*");
 		case NCONT:
+			return crit.regex(".*" + escapeRegexp(value) + ".*").not();
+		case IN:
+		case NIN:
 		default:
 			throw new GenericException("Unknown query Op: " + op);
 		}
+	}
+
+	private String escapeRegexp(final String value) {
+		// /[-\/\\^$*+?.()|[\]{}]/g, '\\$&'
+		return value;
 	}
 
 }
