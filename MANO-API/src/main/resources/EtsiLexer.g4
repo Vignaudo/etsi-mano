@@ -26,7 +26,7 @@ CONT: 'cont';
 NCONT: 'ncont'; 
 FILTER: 'filter';
 
-ATTRIBUTE: [a-zA-Z0-9]+;
+ATTRIBUTE: [a-zA-Z]+;
 
 STRING: ~[.=,&]+;
 
