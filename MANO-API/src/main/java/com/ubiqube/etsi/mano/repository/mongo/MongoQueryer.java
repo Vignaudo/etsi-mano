@@ -1,8 +1,8 @@
 package com.ubiqube.etsi.mano.repository.mongo;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -31,13 +31,9 @@ public class MongoQueryer {
 	}
 
 	private List<Criteria> convertNodeList(final List<Node> nodes) {
-		final List<Criteria> criterias = new ArrayList<>();
-		for (final Node node : nodes) {
-			Criteria crit = Criteria.where(node.getName());
-			crit = applyOp(crit, node.getOp(), node.getValue());
-			criterias.add(crit);
-		}
-		return criterias;
+		return nodes.stream()
+				.map(x -> applyOp(Criteria.where(x.getName()), x.getOp(), x.getValue()))
+				.collect(Collectors.toList());
 	}
 
 	private Criteria applyOp(final Criteria crit, final Operand op, final String value) {

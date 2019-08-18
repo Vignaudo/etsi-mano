@@ -29,7 +29,7 @@ public class VnfPackagePhysTest {
 	public VnfPackagePhysTest() {
 		final JsonFilter jsonFilter = new JsonFilter(new JsonBeanUtil());
 		configuration = new PropertiesConfiguration();
-		configuration.set("", ROOT);
+		configuration.set("repository.phys.root", ROOT);
 		vnfPackagePhys = new VnfPackagePhys(configuration, new ObjectMapper(), jsonFilter);
 	}
 
