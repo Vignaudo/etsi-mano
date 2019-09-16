@@ -87,7 +87,6 @@ dependencies {
 	
 	compile group: 'org.hibernate', name: 'hibernate-search', version: '5.11.5.Final'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '2.1.5.RELEASE'
-=======
 	
 	compile group: 'org.apache.jclouds.api', name: 'docker', version: '2.1.2'
 	compile group: 'org.apache.jclouds', name: 'jclouds-compute', version: '2.1.2'
