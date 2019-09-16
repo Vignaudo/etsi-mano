@@ -98,4 +98,9 @@ public class LowPhys implements Low {
 		}
 	}
 
+	@Override
+	public boolean isDirectory(final String _path) {
+		return new File(_path).isDirectory();
+	}
+
 }

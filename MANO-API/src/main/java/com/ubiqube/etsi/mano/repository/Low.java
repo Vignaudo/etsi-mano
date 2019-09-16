@@ -75,12 +75,4 @@ public interface Low {
 	 * @return The content of the file.
 	 */
 	byte[] get(String _path, int _min, Long _max);
-
-	/**
-	 * Convenient method for retrieving a file.
-	 *
-	 * @param _pathThe filename.
-	 * @return The content of the file.
-	 */
-	byte[] get(String _path);
 }
