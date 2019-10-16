@@ -8,17 +8,18 @@ import org.jgrapht.Graph;
 import org.jgrapht.ListenableGraph;
 import org.jgrapht.alg.connectivity.KosarajuStrongConnectivityInspector;
 import org.jgrapht.alg.interfaces.StrongConnectivityAlgorithm;
-import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultListenableGraph;
+import org.jgrapht.graph.DirectedAcyclicGraph;
 import org.jgrapht.traverse.DepthFirstIterator;
+import org.jgrapht.traverse.TopologicalOrderIterator;
 import org.junit.jupiter.api.Test;
 
 public class GraphTest {
 
 	@Test
 	void testName() throws Exception {
-		final ListenableGraph<Vdu, DefaultEdge> g = new DefaultListenableGraph<>(new DefaultDirectedGraph<>(DefaultEdge.class));
+		final ListenableGraph<Vdu, DefaultEdge> g = new DefaultListenableGraph<>(new DirectedAcyclicGraph(DefaultEdge.class));
 		final Vdu vduA = new Vdu("A");
 		final Vdu vduB = new Vdu("B");
 		final Vdu vduC = new Vdu("C");
@@ -83,5 +84,11 @@ public class GraphTest {
 			System.out.println("" + element);
 		}
 		// F is the end.
+		System.out.println("=========================== Sequential safe list.");
+		final TopologicalOrderIterator<Vdu, DefaultEdge> orderIterator = new TopologicalOrderIterator<>(g);
+		while (orderIterator.hasNext()) {
+			final Vdu vertexVdu = orderIterator.next();
+			System.out.println(" >" + vertexVdu);
+		}
 	}
 }
