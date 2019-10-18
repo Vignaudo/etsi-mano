@@ -41,5 +41,4 @@ public class Task {
 	public void setStatus(final LcmOperationStateType status) {
 		this.status = status;
 	}
-
 }
