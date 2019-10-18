@@ -9,7 +9,6 @@ import java.util.stream.StreamSupport;
 
 import org.jgrapht.Graph;
 import org.jgrapht.ListenableGraph;
-import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultListenableGraph;
 import org.jgrapht.graph.DirectedAcyclicGraph;
 import org.jgrapht.traverse.DepthFirstIterator;
@@ -20,7 +19,8 @@ public class GraphTest {
 
 	@Test
 	void testName() throws Exception {
-		final ListenableGraph<Vdu, DefaultEdge> g = new DefaultListenableGraph<>(new DirectedAcyclicGraph(DefaultEdge.class));
+		final ListenableGraph<Vdu, ConnectivityEdge> g = new DefaultListenableGraph<>(new DirectedAcyclicGraph(ConnectivityEdge.class));
+		g.addGraphListener(new EdgeListener<Vdu>());
 		final Vdu vduA = new Vdu("A");
 		final Vdu vduB = new Vdu("B");
 		final Vdu vduC = new Vdu("C");
@@ -53,34 +53,33 @@ public class GraphTest {
 		// C cannot start but B can start.
 		System.out.println("==> vduE have finished.");
 		// E have finished.
-		Set<DefaultEdge> oe = g.outgoingEdgesOf(vduE);
-		for (final Object element : oe) {
-			final DefaultEdge defaultEdge = (DefaultEdge) element;
-			System.out.println("" + defaultEdge);
+		Set<ConnectivityEdge> oe = g.outgoingEdgesOf(vduE);
+		for (final ConnectivityEdge element : oe) {
+			System.out.println("" + element);
 		}
 		// C & F can start.
 		System.out.println("==> vduF have finished.");
 		oe = g.outgoingEdgesOf(vduF);
-		for (final DefaultEdge element : oe) {
+		for (final ConnectivityEdge element : oe) {
 			System.out.println("" + element);
 		}
 		// F is the end.
 		System.out.println("=========================== Sequential safe list.");
-		final TopologicalOrderIterator<Vdu, DefaultEdge> orderIterator = new TopologicalOrderIterator<>(g);
+		final TopologicalOrderIterator<Vdu, ConnectivityEdge> orderIterator = new TopologicalOrderIterator<>(g);
 		while (orderIterator.hasNext()) {
 			final Vdu vertexVdu = orderIterator.next();
 			System.out.println(" >" + vertexVdu);
 		}
 	}
 
-	private void onFinishTask(final ListenableGraph<Vdu, DefaultEdge> g, final Vdu vduA) {
-		final Set<DefaultEdge> oe = g.outgoingEdgesOf(vduA);
-		oe.stream().forEach(x -> checkPreCondition(x));
+	private void onFinishTask(final ListenableGraph<Vdu, ConnectivityEdge> g, final Vdu vduA) {
+		final Set<ConnectivityEdge> oe = g.outgoingEdgesOf(vduA);
+		oe.stream().forEach(this::checkPreCondition);
 	}
 
-	private Object checkPreCondition(final DefaultEdge x) {
+	private Object checkPreCondition(final ConnectivityEdge x) {
 		// Target of x.
-		System.out.println("Check precondition of: " + x);
+		System.out.println("Check precondition of: " + x.getTarget());
 		return null;
 	}
 
