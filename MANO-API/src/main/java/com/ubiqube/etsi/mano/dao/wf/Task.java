@@ -3,6 +3,8 @@ package com.ubiqube.etsi.mano.dao.wf;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +17,9 @@ public class Task {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 
-	private String nsInstanceId;
+	private String externalJobId;
+
+	@Enumerated(EnumType.STRING)
 	private LcmOperationStateType status;
 
 	public UUID getId() {
@@ -26,12 +30,12 @@ public class Task {
 		this.id = id;
 	}
 
-	public String getNsInstanceId() {
-		return nsInstanceId;
+	public String getExternalJobId() {
+		return externalJobId;
 	}
 
-	public void setNsInstanceId(final String nsInstanceId) {
-		this.nsInstanceId = nsInstanceId;
+	public void setExternalJobId(final String externalJobId) {
+		this.externalJobId = externalJobId;
 	}
 
 	public LcmOperationStateType getStatus() {
