@@ -9,7 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.ubiqube.etsi.mano.model.nslcm.LcmOperationStateType;
 
@@ -18,18 +18,27 @@ public class Task {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
-
+	private String name;
 	private String externalJobId;
 
 	@Enumerated(EnumType.STRING)
 	private LcmOperationStateType status;
 
-	@ManyToOne
+	@OneToOne
 	private Workflow workflow;
 
 	private String clazz;
+
 	@Embedded
 	private Configuration configuration;
+
+	public Task() {
+		// Nothing.
+	}
+
+	public Task(final String _name) {
+		name = _name;
+	}
 
 	public UUID getId() {
 		return id;
@@ -37,6 +46,14 @@ public class Task {
 
 	public void setId(final UUID id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
 	}
 
 	public String getExternalJobId() {

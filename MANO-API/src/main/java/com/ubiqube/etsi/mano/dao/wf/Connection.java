@@ -1,25 +1,23 @@
 package com.ubiqube.etsi.mano.dao.wf;
 
-import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Connection {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
-	@OneToMany
-	private Set<Task> source;
-	@OneToMany
-	private Set<Task> target;
-	@ManyToOne
+	@OneToOne
+	private Task source;
+	@OneToOne
+	private Task target;
+	@OneToOne
 	private Workflow workflow;
 
 	public UUID getId() {
@@ -30,19 +28,19 @@ public class Connection {
 		this.id = id;
 	}
 
-	public Set<Task> getSource() {
+	public Task getSource() {
 		return source;
 	}
 
-	public void setSource(final Set<Task> source) {
+	public void setSource(final Task source) {
 		this.source = source;
 	}
 
-	public Set<Task> getTarget() {
+	public Task getTarget() {
 		return target;
 	}
 
-	public void setTarget(final Set<Task> target) {
+	public void setTarget(final Task target) {
 		this.target = target;
 	}
 

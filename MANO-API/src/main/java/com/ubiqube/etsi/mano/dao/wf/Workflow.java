@@ -3,6 +3,7 @@ package com.ubiqube.etsi.mano.dao.wf;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -21,12 +22,15 @@ public class Workflow {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private Set<Connection> edges;
-	@OneToMany
+
+	@OneToMany(cascade = CascadeType.ALL)
 	private Set<Task> tasks;
+
 	@Enumerated(EnumType.STRING)
-	private LcmOperationStateType status;
+	private LcmOperationStateType workflowStatus;
+
 	@Embedded
 	private ProblemDetails problemDetails;
 
@@ -54,12 +58,12 @@ public class Workflow {
 		this.tasks = tasks;
 	}
 
-	public LcmOperationStateType getStatus() {
-		return status;
+	public LcmOperationStateType getWorkflowStatus() {
+		return workflowStatus;
 	}
 
-	public void setStatus(final LcmOperationStateType status) {
-		this.status = status;
+	public void setWorkflowStatus(final LcmOperationStateType workflowStatus) {
+		this.workflowStatus = workflowStatus;
 	}
 
 	public ProblemDetails getProblemDetails() {
