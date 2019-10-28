@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.ubiqube.etsi.mano.dao.wf.Task;
+import com.ubiqube.etsi.mano.wf.dao.Task;
 
 public interface TaskRepository extends CrudRepository<Task, UUID> {
 

@@ -1,4 +1,4 @@
-package com.ubiqube.etsi.mano.dao.wf;
+package com.ubiqube.etsi.mano.wf.dao;
 
 import java.util.UUID;
 
@@ -94,6 +94,11 @@ public class Task {
 
 	public void setConfiguration(final Configuration configuration) {
 		this.configuration = configuration;
+	}
+
+	@Override
+	public String toString() {
+		return "Task [id=" + id + ", name=" + name + ", externalJobId=" + externalJobId + ", status=" + status + ", workflow=" + workflow + ", clazz=" + clazz + ", configuration=" + configuration + "]";
 	}
 
 }

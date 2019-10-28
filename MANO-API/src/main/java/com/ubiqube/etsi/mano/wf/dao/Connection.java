@@ -1,4 +1,4 @@
-package com.ubiqube.etsi.mano.dao.wf;
+package com.ubiqube.etsi.mano.wf.dao;
 
 import java.util.UUID;
 
