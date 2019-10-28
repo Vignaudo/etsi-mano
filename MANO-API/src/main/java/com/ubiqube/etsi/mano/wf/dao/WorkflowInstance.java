@@ -8,6 +8,7 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ import javax.persistence.OneToOne;
 
 import com.ubiqube.etsi.mano.model.nslcm.LcmOperationStateType;
 
+@Entity
 public class WorkflowInstance {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

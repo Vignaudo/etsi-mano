@@ -14,7 +14,6 @@ import org.jgrapht.graph.DirectedAcyclicGraph;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.ComponentScan;
 
 import com.ubiqube.etsi.mano.model.nslcm.LcmOperationStateType;
 import com.ubiqube.etsi.mano.wf.dao.Connection;
@@ -28,7 +27,6 @@ import com.ubiqube.etsi.mano.wf.repository.WorkFlowRepository;
 import com.ubiqube.etsi.mano.wf.repository.WorkflowInstanceRepository;
 
 @DataJpaTest
-@ComponentScan("com.ubiqube.etsi.mano.wf")
 public class TaskTest {
 	@Autowired
 	private WorkFlowRepository workflowRepository;
