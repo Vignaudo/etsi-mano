@@ -28,7 +28,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ubiqube.etsi.mano.Application;
 import com.ubiqube.etsi.mano.dao.mano.VnfPackage;
-import com.ubiqube.etsi.mano.repository.jpa.VnfPackageFacade;
+import com.ubiqube.etsi.mano.repository.jpa.VnfPackageDb;
 
 @SpringBootTest(classes = Application.class)
 public class VnfPkgTest {
@@ -36,7 +36,7 @@ public class VnfPkgTest {
 	private EntityManager em;
 
 	@Autowired
-	private VnfPackageFacade vnfPackageFacade;
+	private VnfPackageDb vnfPackageFacade;
 
 	void testName() throws Exception {
 		final Metamodel mm = em.getMetamodel();

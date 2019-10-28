@@ -30,7 +30,7 @@ public class VnfPackagePhysTest {
 		final JsonFilter jsonFilter = new JsonFilter(new JsonBeanUtil());
 		configuration = new PropertiesConfiguration();
 		configuration.set("repository.phys.root", ROOT);
-		vnfPackagePhys = new VnfPackagePhys(configuration, new ObjectMapper(), jsonFilter);
+		vnfPackagePhys = new VnfPackagePhys(configuration, new ObjectMapper(), jsonFilter, new LowPhys());
 	}
 
 	@BeforeEach
@@ -114,7 +114,7 @@ public class VnfPackagePhysTest {
 		final VnfPkgInfo entity = new VnfPkgInfo();
 		vnfPackagePhys.save(entity);
 
-		vnfPackagePhys.storeBinary(entity.getId(), "{}", "file.txt");
+		vnfPackagePhys.storeBinary(entity.getId(), "file.txt", "{}");
 
 		final byte[] res = vnfPackagePhys.getBinary(entity.getId(), "file.txt", 0, 1);
 		assertNotNull(res);
@@ -128,7 +128,7 @@ public class VnfPackagePhysTest {
 		final VnfPkgInfo entity = new VnfPkgInfo();
 		vnfPackagePhys.save(entity);
 
-		vnfPackagePhys.storeBinary(entity.getId(), bis, "file.txt");
+		vnfPackagePhys.storeBinary(entity.getId(), "file.txt", bis);
 
 		final byte[] res = vnfPackagePhys.getBinary(entity.getId(), "file.txt");
 		assertNotNull(res);
