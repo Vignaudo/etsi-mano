@@ -17,10 +17,12 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.ubiqube.etsi.mano.model.nslcm.LcmOperationStateType;
 import com.ubiqube.etsi.mano.wf.dao.Connection;
+import com.ubiqube.etsi.mano.wf.dao.ConnectionInstance;
 import com.ubiqube.etsi.mano.wf.dao.Task;
 import com.ubiqube.etsi.mano.wf.dao.TaskInstance;
 import com.ubiqube.etsi.mano.wf.dao.Workflow;
 import com.ubiqube.etsi.mano.wf.dao.WorkflowInstance;
+import com.ubiqube.etsi.mano.wf.repository.ConnectionInstanceRepository;
 import com.ubiqube.etsi.mano.wf.repository.ConnectionRepository;
 import com.ubiqube.etsi.mano.wf.repository.TaskInstanceRepository;
 import com.ubiqube.etsi.mano.wf.repository.WorkFlowRepository;
@@ -36,6 +38,9 @@ public class TaskTest {
 	private WorkflowInstanceRepository workflowInstanceRepository;
 	@Autowired
 	private TaskInstanceRepository taskInstanceRepository;
+
+	@Autowired
+	private ConnectionInstanceRepository connectionInstanceRepository;
 
 	@Test
 	void testName() throws Exception {
@@ -98,32 +103,56 @@ public class TaskTest {
 		task.setTaskStatus(LcmOperationStateType.PROCESSING);
 		taskInstanceRepository.save(task);
 		// get downStream connections.
+		final List<ConnectionInstance> list = connectionInstanceRepository.findByTarget(task.getId());
 		// Check completion.
+		if (!isCompleted(list)) {
+			return;
+		}
 		// if so Start task.
+	}
+
+	private boolean isCompleted(final List<ConnectionInstance> list) {
+		for (final ConnectionInstance connectionInstance : list) {
+			if (connectionInstance.getState() != LcmOperationStateType.COMPLETED) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private void onFinished(final TaskInstance ti) {
 		ti.setTaskStatus(LcmOperationStateType.COMPLETED);
 		taskInstanceRepository.save(ti);
 		// get upstream connections.
+		final List<ConnectionInstance> list = connectionInstanceRepository.findBySource(ti.getId());
 		// foreach flag completed.
+		list.forEach(x -> {
+			x.setState(LcmOperationStateType.COMPLETED);
+			connectionInstanceRepository.save(x);
+
+		});
 		// foreach start task.
+		list.forEach(x -> start(x.getTarget()));
 	}
 
-	private List<TaskInstance> getRoots2(final WorkflowInstance wi) {
+	private List<ConnectionInstance> getUpstream(final TaskInstance ti) {
+		return connectionInstanceRepository.findBySource(ti.getId());
+	}
+
+	private static List<TaskInstance> getRoots2(final WorkflowInstance wi) {
 		final HashSet<TaskInstance> ti = new HashSet<>(wi.getTaskInstances());
 		wi.getEdges().stream()
 				.forEach(x -> ti.remove(x.getTarget()));
 		return ti.stream().collect(Collectors.toList());
 	}
 
-	private List<Task> getRoots(final Graph<Task, Connection> g) {
+	private static List<Task> getRoots(final Graph<Task, Connection> g) {
 		return g.vertexSet().stream()
 				.filter(x -> g.incomingEdgesOf(x).isEmpty())
 				.collect(Collectors.toList());
 	}
 
-	private Connection connect(final Task a, final Task b) {
+	private static Connection connect(final Task a, final Task b) {
 		final Connection c = new Connection();
 		c.setSource(a);
 		c.setTarget(b);

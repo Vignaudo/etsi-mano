@@ -47,4 +47,12 @@ public class TaskInstance {
 		this.taskStatus = taskStatus;
 	}
 
+	public UUID getId() {
+		return id;
+	}
+
+	public void setId(final UUID id) {
+		this.id = id;
+	}
+
 }

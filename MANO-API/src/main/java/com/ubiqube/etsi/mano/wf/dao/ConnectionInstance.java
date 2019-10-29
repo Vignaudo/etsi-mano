@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.ubiqube.etsi.mano.model.nslcm.LcmOperationStateType;
+
 @Entity
 public class ConnectionInstance {
 	@Id
@@ -19,6 +21,8 @@ public class ConnectionInstance {
 	private TaskInstance source;
 	@OneToOne
 	private TaskInstance target;
+
+	private LcmOperationStateType state;
 
 	public ConnectionInstance() {
 		// Nothing.
@@ -52,6 +56,22 @@ public class ConnectionInstance {
 
 	public void setTarget(final TaskInstance target) {
 		this.target = target;
+	}
+
+	public UUID getId() {
+		return id;
+	}
+
+	public void setId(final UUID id) {
+		this.id = id;
+	}
+
+	public LcmOperationStateType getState() {
+		return state;
+	}
+
+	public void setState(final LcmOperationStateType state) {
+		this.state = state;
 	}
 
 }
