@@ -55,4 +55,9 @@ public class TaskInstance {
 		this.id = id;
 	}
 
+	@Override
+	public String toString() {
+		return "TaskInstance [id=" + id + ", Instance of: " + task.getName() + ", taskStatus=" + taskStatus + "]";
+	}
+
 }
