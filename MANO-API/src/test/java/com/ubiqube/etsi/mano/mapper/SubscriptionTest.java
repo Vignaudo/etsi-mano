@@ -45,6 +45,7 @@ public class SubscriptionTest {
 		final List<PkgmNotificationsFilterVnfProductsFromProviders> vnfProductsFromProviders = new ArrayList<>();
 		final PkgmNotificationsFilterVnfProductsFromProviders subProv = new PkgmNotificationsFilterVnfProductsFromProviders();
 		subProv.addOperationalStateItem(PackageOperationalStateType.DISABLED);
+
 		vnfProductsFromProviders.add(subProv);
 		filter.setVnfProductsFromProviders(vnfProductsFromProviders);
 		subsJson.setFilter(filter);
