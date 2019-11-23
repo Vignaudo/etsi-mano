@@ -59,7 +59,7 @@ public class VnfPackageMongo implements VnfPackageRepository {
 	}
 
 	@Override
-	public byte[] getBinary(final String _id, final String _filename, final int min, final Integer max) {
+	public byte[] getBinary(final String _id, final String _filename, final int min, final Long max) {
 		// TODO Auto-generated method stub
 		return null;
 	}

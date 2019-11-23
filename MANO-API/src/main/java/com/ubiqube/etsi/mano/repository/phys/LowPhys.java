@@ -48,15 +48,6 @@ public class LowPhys implements Low {
 	}
 
 	@Override
-	public byte[] get(final String _path) {
-		try {
-			return Files.readAllBytes(Paths.get(_path));
-		} catch (final IOException e) {
-			throw new GenericException(e);
-		}
-	}
-
-	@Override
 	public void delete(final String _path) {
 		boolean result;
 		try {

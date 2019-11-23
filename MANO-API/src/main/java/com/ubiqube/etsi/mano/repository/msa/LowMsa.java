@@ -61,8 +61,7 @@ public class LowMsa implements Low {
 		}
 	}
 
-	@Override
-	public byte[] get(final String _path) {
+	private byte[] get(final String _path) {
 		final RepositoryElement repositoryElement = repositoryService.getElement(_path);
 		if (null == repositoryElement) {
 			throw new NotFoundException("Unable to find file " + _path);
