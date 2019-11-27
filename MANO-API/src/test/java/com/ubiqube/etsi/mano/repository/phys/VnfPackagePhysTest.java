@@ -18,6 +18,8 @@ import com.ubiqube.etsi.mano.exception.NotFoundException;
 import com.ubiqube.etsi.mano.grammar.JsonBeanUtil;
 import com.ubiqube.etsi.mano.grammar.JsonFilter;
 import com.ubiqube.etsi.mano.model.vnf.sol005.VnfPkgInfo;
+import com.ubiqube.etsi.mano.repository.DefaultNamingStrategy;
+import com.ubiqube.etsi.mano.repository.NamingStrategy;
 import com.ubiqube.etsi.mano.service.PropertiesConfiguration;
 
 public class VnfPackagePhysTest {
@@ -30,7 +32,8 @@ public class VnfPackagePhysTest {
 		final JsonFilter jsonFilter = new JsonFilter(new JsonBeanUtil());
 		configuration = new PropertiesConfiguration();
 		configuration.set("repository.phys.root", ROOT);
-		vnfPackagePhys = new VnfPackagePhys(configuration, new ObjectMapper(), jsonFilter, new LowPhys());
+		final NamingStrategy namingStrategy = new DefaultNamingStrategy(configuration);
+		vnfPackagePhys = new VnfPackagePhys(new ObjectMapper(), jsonFilter, new LowPhys(), namingStrategy);
 	}
 
 	@BeforeEach
@@ -69,7 +72,7 @@ public class VnfPackagePhysTest {
 	@Test
 	void testBadStoreBinary() throws Exception {
 		assertThrows(NotFoundException.class, () -> {
-			vnfPackagePhys.storeBinary("DEADBEEF", "", "");
+			vnfPackagePhys.storeBinary("DEADBEEF", "", new ByteArrayInputStream(new byte[0]));
 		});
 	}
 
@@ -77,7 +80,7 @@ public class VnfPackagePhysTest {
 	void testBadStoreBinary2() throws Exception {
 		final FileInputStream fis = new FileInputStream("src/test/resources/VnfPkgInfoModifications.json");
 		assertThrows(NotFoundException.class, () -> {
-			vnfPackagePhys.storeBinary("DEADBEEF", fis, "");
+			vnfPackagePhys.storeBinary("DEADBEEF", "", fis);
 		});
 	}
 
@@ -91,7 +94,7 @@ public class VnfPackagePhysTest {
 	@Test
 	void testBadGetBinary2() throws Exception {
 		assertThrows(NotFoundException.class, () -> {
-			vnfPackagePhys.getBinary("DEADBEEF", "B16B00B5", 0, 12);
+			vnfPackagePhys.getBinary("DEADBEEF", "B16B00B5", 0, 12L);
 		});
 	}
 
@@ -100,7 +103,7 @@ public class VnfPackagePhysTest {
 		final VnfPkgInfo entity = new VnfPkgInfo();
 		vnfPackagePhys.save(entity);
 
-		vnfPackagePhys.storeBinary(entity.getId(), "{}", "file.txt");
+		vnfPackagePhys.storeBinary(entity.getId(), "file.txt", new ByteArrayInputStream(new byte[0]));
 
 		final byte[] res = vnfPackagePhys.getBinary(entity.getId(), "file.txt");
 		assertNotNull(res);
@@ -114,9 +117,9 @@ public class VnfPackagePhysTest {
 		final VnfPkgInfo entity = new VnfPkgInfo();
 		vnfPackagePhys.save(entity);
 
-		vnfPackagePhys.storeBinary(entity.getId(), "file.txt", "{}");
+		vnfPackagePhys.storeBinary(entity.getId(), "file.txt", new ByteArrayInputStream(new byte[0]));
 
-		final byte[] res = vnfPackagePhys.getBinary(entity.getId(), "file.txt", 0, 1);
+		final byte[] res = vnfPackagePhys.getBinary(entity.getId(), "file.txt", 0, 1L);
 		assertNotNull(res);
 		assertEquals(1, res.length);
 		assertEquals('{', res[0]);
