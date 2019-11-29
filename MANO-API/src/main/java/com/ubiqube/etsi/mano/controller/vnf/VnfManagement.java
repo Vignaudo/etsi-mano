@@ -60,6 +60,8 @@ public class VnfManagement implements VnfPackageManagement {
 
 	@Override
 	public String vnfPackagesGet(final Map<String, String> queryParameters, final Linkable links) {
+		// TODO: queryParameters is not correct. Plus this code is allways the same, we
+		// should factorize it.
 		final String filter = queryParameters.get("filter");
 
 		final List<VnfPkgInfo> vnfPkginfos = vnfPackageRepository.query(filter);
@@ -101,7 +103,6 @@ public class VnfManagement implements VnfPackageManagement {
 				}
 				if (entry.getName().equals(artifactPath)) {
 					return handleArtifact(zis, rangeHeader);
-
 				}
 			}
 		} catch (final IOException e) {
