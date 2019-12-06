@@ -88,12 +88,15 @@ dependencies {
 	compile group: 'org.hibernate', name: 'hibernate-search', version: '5.11.5.Final'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '2.1.5.RELEASE'
 	
-	compile group: 'org.apache.jclouds.api', name: 'docker', version: '2.1.2'
-	compile group: 'org.apache.jclouds', name: 'jclouds-compute', version: '2.1.2'
-	testCompile group: 'org.apache.jclouds.driver', name: 'jclouds-slf4j', version: '2.1.2'
-	testCompile group: 'org.apache.jclouds.driver', name: 'jclouds-sshj', version: '2.1.2'
-	testCompile group: 'org.apache.jclouds.driver', name: 'jclouds-log4j', version: '2.1.2'
-	//compile 'com.google.code.gson:gson:2.5'
+	compile group: 'org.apache.jclouds.api', name: 'docker', version: '2.1.3'
+	compile group: 'org.apache.jclouds', name: 'jclouds-compute', version: '2.1.3'
+	testCompile group: 'org.apache.jclouds.driver', name: 'jclouds-slf4j', version: '2.1.3'
+	testCompile group: 'org.apache.jclouds.driver', name: 'jclouds-sshj', version: '2.1.3'
+	testCompile group: 'org.apache.jclouds.driver', name: 'jclouds-log4j', version: '2.1.3'
+	compile group: 'org.apache.jclouds.api', name: 'openstack-keystone', version: '2.1.3'
+	compile group: 'org.apache.jclouds.api', name: 'openstack-nova', version: '2.1.3'
+	compile group: 'org.apache.jclouds.labs', name: 'openstack-heat', version: '2.1.3'
+	compile 'com.google.code.gson:gson:2.5'
 	
 	compile group: 'org.jgrapht', name: 'jgrapht-core', version: '1.3.1'
 	
