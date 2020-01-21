@@ -1,9 +1,9 @@
 package com.ubiqube.etsi.mano.mapper;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,44 +29,38 @@ public class JsonWalker {
 		try {
 			LOG.debug("JsonWalking ");
 			final JsonNode patch = mapper.readTree(_patchDocument);
-			walk(patch, beanListener);
+			walkInner(patch, beanListener);
 		} catch (final IOException _e) {
 			throw new GenericException(_e);
 		}
 	}
 
-	public void walk(final JsonNode _patch, final BeanListener beanListener) {
-		try {
-			walkInner(_patch, beanListener);
-		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-			throw new GenericException(e);
-		}
-	}
-
-	private static void walkInner(final JsonNode jsonNode, final BeanListener beanListener) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+	private static void walkInner(final JsonNode jsonNode, final BeanListener beanListener) {
 		if (jsonNode.isObject()) {
 			final Iterator<Map.Entry<String, JsonNode>> iter = jsonNode.fields();
-			while (iter.hasNext()) {
-				final Map.Entry<String, JsonNode> entry = iter.next();
-				beanListener.complexStart(entry.getKey());
-				walkInner(entry.getValue(), beanListener);
-				beanListener.complexEnd();
-			}
+			iter.forEachRemaining(x -> handleObject(x, beanListener));
 		} else if (jsonNode.isArray()) {
 			final ArrayNode arrayNode = (ArrayNode) jsonNode;
-			for (int i = 0; i < arrayNode.size(); i++) {
-				final JsonNode val = arrayNode.get(i);
-				beanListener.listElementStart(i);
-				if (val.isValueNode()) {
-					beanListener.addProperty(val.asText());
-				} else {
-					walkInner(val, beanListener);
-				}
-				beanListener.listElementEnd();
-			}
+			IntStream.range(0, arrayNode.size()).forEach(x -> handleArray(x, arrayNode, beanListener));
 		} else if (jsonNode.isValueNode()) {
 			beanListener.addProperty(jsonNode.asText());
 		}
 	}
 
+	private static void handleObject(final Map.Entry<String, JsonNode> entry, final BeanListener beanListener) {
+		beanListener.complexStart(entry.getKey());
+		walkInner(entry.getValue(), beanListener);
+		beanListener.complexEnd();
+	}
+
+	private static void handleArray(final int i, final ArrayNode arrayNode, final BeanListener beanListener) {
+		final JsonNode val = arrayNode.get(i);
+		beanListener.listElementStart(i);
+		if (val.isValueNode()) {
+			beanListener.addProperty(val.asText());
+		} else {
+			walkInner(val, beanListener);
+		}
+		beanListener.listElementEnd();
+	}
 }
