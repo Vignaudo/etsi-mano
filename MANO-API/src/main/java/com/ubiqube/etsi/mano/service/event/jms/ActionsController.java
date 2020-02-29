@@ -4,6 +4,7 @@ import java.util.Base64;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import com.ubiqube.etsi.mano.service.event.NfvoActions;
 import com.ubiqube.etsi.mano.service.event.PackagingManager;
 import com.ubiqube.etsi.mano.service.event.VnfmActions;
 
+@Profile("!offline")
 @Service
 public class ActionsController {
 

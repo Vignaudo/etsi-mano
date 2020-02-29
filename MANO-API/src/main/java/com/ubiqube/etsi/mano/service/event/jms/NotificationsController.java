@@ -2,12 +2,14 @@ package com.ubiqube.etsi.mano.service.event.jms;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
 
 import com.ubiqube.etsi.mano.model.vnf.sol005.PkgmNotificationsFilter.NotificationTypesEnum;
 import com.ubiqube.etsi.mano.service.event.VnfEvent;
 
+@Profile("!offline")
 @Service
 public class NotificationsController {
 
