@@ -38,16 +38,11 @@ public class SpelPatcher implements Patcher {
 
 	@Override
 	public void patch(final String _patchDocument, final Object _entity) {
-		try {
 			final CollectNonNullListener beanListener = new CollectNonNullListener();
-			final JsonNode patch = mapper.readTree(_patchDocument);
-			jsonWalker.walk(patch, beanListener);
+			jsonWalker.walk(_patchDocument, beanListener);
 			final List<AttrHolder> attrsHolders = beanListener.getAttrs();
 			final List<FilterAttributes> attrs = spelWriter.getFilterAttrs(attrsHolders);
 			patchAttrs(attrs, _entity);
-		} catch (final IOException _e) {
-			throw new GenericException(_e);
-		}
 	}
 
 	private static void patchAttrs(final List<FilterAttributes> attrs, final Object _entity) {

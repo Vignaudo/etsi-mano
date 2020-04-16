@@ -51,10 +51,10 @@ public class OpenStackVim implements Vim {
 	}
 
 	@Override
-	public String onNsInstanceTerminate(final Map<String, Object> userData) {
+	public String onNsInstanceTerminate(String nsdId, final Map<String, Object> userData) {
 		final StackApi stackApi = getStackApi();
 		stackApi.delete("", nsdId);
-		return nsdId;
+		return "nsdId";
 	}
 
 	@Override
