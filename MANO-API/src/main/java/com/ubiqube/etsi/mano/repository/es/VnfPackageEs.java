@@ -66,4 +66,10 @@ public class VnfPackageEs implements VnfPackageRepository {
 
 	}
 
+    @Override
+    public void delete(@NotNull String _id, @NotNull String _filename) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

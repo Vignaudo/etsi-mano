@@ -81,4 +81,10 @@ public class VnfPackageMongo implements VnfPackageRepository {
 		// TODO Auto-generated method stub
 
 	}
+
+    @Override
+    public void delete(@NotNull String _id, @NotNull String _filename) {
+        // TODO Auto-generated method stub
+        
+    }
 }
